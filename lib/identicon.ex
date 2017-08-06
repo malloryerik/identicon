@@ -22,9 +22,12 @@ defmodule Identicon do
     %Identicon.Image{hex: hex}
   end
 
-  def pick_color(image) do
-    %Identicon.Image{hex: hex_list} = image
-    [r, g, b | _tail] = hex_list
-    [r, g, b]
+    # Could do red = `Enum.at(hex_list, 0)`, but it would be unidiomatic. 
+    # Also, Enum operates in linear time, though that wouldn't matter here
+    def pick_color(image) do
+      %Identicon.Image{hex: [r, g, b | tail]} =  image 
+
+      %Identicon.Image{hex: image, color: {r, g, b}, tail: {tail}}
+      
   end
 end
